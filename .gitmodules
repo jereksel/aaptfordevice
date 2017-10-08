@@ -12,3 +12,8 @@
 	path = app/src/main/jni/system_core
 	url = https://github.com/android/platform_system_core.git
 	branch = nougat-mr2.3-release
+	
+[submodule "app/src/main/jni/safe-iop"]
+	path = app/src/main/jni/safe-iop
+	url = https://github.com/android/platform_external_safe-iop.git
+	branch = nougat-mr2.3-release

@@ -134,22 +134,56 @@ libcutils_CFLAGS += $(libcutils_targetSmpFlag)
 libcutils_CFLAGS += -DHAVE_PTHREADS -DHAVE_SCHED_H -DHAVE_SYS_UIO_H -DHAVE_ANDROID_OS -DHAVE_IOCTL -DHAVE_TM_GMTOFF
 libcutils_C_INCLUDES := $(LOCAL_PATH)/system_core/include/
 
+#############################################################################
+# libutils definitions
+#############################################################################
+
+LIBUTILS = system_core/libutils
+
+libutils_SRC_FILES := \
+	$(LIBUTILS)/CallStack.cpp \
+	$(LIBUTILS)/FileMap.cpp \
+	$(LIBUTILS)/JenkinsHash.cpp \
+	$(LIBUTILS)/LinearTransform.cpp \
+	$(LIBUTILS)/Log.cpp \
+	$(LIBUTILS)/NativeHandle.cpp \
+	$(LIBUTILS)/Printer.cpp \
+	$(LIBUTILS)/PropertyMap.cpp \
+	$(LIBUTILS)/RefBase.cpp \
+	$(LIBUTILS)/SharedBuffer.cpp \
+	$(LIBUTILS)/Static.cpp \
+	$(LIBUTILS)/StopWatch.cpp \
+	$(LIBUTILS)/String8.cpp \
+	$(LIBUTILS)/String16.cpp \
+	$(LIBUTILS)/SystemClock.cpp \
+	$(LIBUTILS)/Threads.cpp \
+	$(LIBUTILS)/Timers.cpp \
+	$(LIBUTILS)/Tokenizer.cpp \
+	$(LIBUTILS)/Unicode.cpp \
+	$(LIBUTILS)/VectorImpl.cpp \
+	$(LIBUTILS)/misc.cpp 
+
+safeiop_SRC_FILES := safe-iop/src/safe_iop.c
+safeiop_C_INCLUDES := safe-iop/include
 
 include $(CLEAR_VARS)
 
 LOCAL_MODULE:= libaaptcomplete
 
+LOCAL_SRC_FILES += $(safeiop_SRC_FILES)
 LOCAL_SRC_FILES += $(libpng_SRC_FILES)
 LOCAL_SRC_FILES += $(expat_SRC_FILES)
 LOCAL_SRC_FILES += $(libcutils_SRC_FILES)
+LOCAL_SRC_FILES += $(libutils_SRC_FILES)
 
+LOCAL_C_INCLUDES += $(safeiop_C_INCLUDES)
 LOCAL_C_INCLUDES += $(libpng_C_INCLUDES)
 LOCAL_C_INCLUDES += $(expat_C_INCLUDES)
 LOCAL_C_INCLUDES += $(libcutils_C_INCLUDES)
 LOCAL_C_INCLUDES += include/
 
 LOCAL_CFLAGS += -DHAVE_MEMMOVE -DHAVE_ENDIAN_H -DHAVE_ANDROID_OS -DHAVE_PTHREADS -DHAVE_SYS_UIO_H -DHAVE_POSIX_FILEMAP -DHAVE_ENDIAN_H -DHAVE_ANDROID_OS -DHAVE_PTHREADS -DHAVE_SYS_UIO_H -DHAVE_POSIX_FILEMAP
-LOCAL_CPPFLAGS += -std=c++11
+LOCAL_CPPFLAGS += -std=c++11 -DHAVE_MEMMOVE -DHAVE_ENDIAN_H -DHAVE_ANDROID_OS -DHAVE_PTHREADS -DHAVE_SYS_UIO_H -DHAVE_POSIX_FILEMAP -DHAVE_ENDIAN_H -DHAVE_ANDROID_OS -DHAVE_PTHREADS -DHAVE_SYS_UIO_H -DHAVE_POSIX_FILEMAP
 
 LOCAL_LDLIBS += -lz -llog
 
