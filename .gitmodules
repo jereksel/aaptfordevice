@@ -1,0 +1,6 @@
+[submodule "app/src/main/jni/libpng"]
+	path = app/src/main/jni/libpng
+	url = https://github.com/android/platform_external_libpng.git
+[submodule "app/src/main/jni/expat"]
+	path = app/src/main/jni/expat
+	url = https://github.com/android/platform_external_expat.git
