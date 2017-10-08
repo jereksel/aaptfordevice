@@ -188,7 +188,8 @@ aapt_SRC_FILES := \
     aapt/WorkQueue.cpp \
     aapt/XMLNode.cpp \
     aapt/ZipEntry.cpp \
-    aapt/ZipFile.cpp
+    aapt/ZipFile.cpp \
+	aapt/Main.cpp
 
 aapt_C_INCLUDES := aapt
 
@@ -271,7 +272,7 @@ LOCAL_CPPFLAGS += -std=c++11 -DHAVE_MEMMOVE -DHAVE_ENDIAN_H -DHAVE_ANDROID_OS -D
 LOCAL_LDLIBS += -lz -llog
 
 # Building a commandline executable for Android
-# include $(BUILD_EXECUTABLE)
+include $(BUILD_EXECUTABLE)
 
 # Building a shared library for Android
-include $(BUILD_SHARED_LIBRARY)
+#include $(BUILD_SHARED_LIBRARY)
