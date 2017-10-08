@@ -214,7 +214,7 @@ androidfw_SRC_FILES := \
 # base definitions
 #############################################################################
 
-BASE = system_core/base
+BASE = $(LOCAL_PATH)/system_core/base
 base_SRC_FILES := \
     $(BASE)/file.cpp \
     $(BASE)/logging.cpp \
@@ -241,8 +241,8 @@ libziparchive_SRC_FILES := \
 # safeiop definitions
 #############################################################################
 
-safeiop_SRC_FILES := safe-iop/src/safe_iop.c
-safeiop_C_INCLUDES := safe-iop/include
+safeiop_SRC_FILES := $(LOCAL_PATH)/safe-iop/src/safe_iop.c
+safeiop_C_INCLUDES := $(LOCAL_PATH)/safe-iop/include
 
 include $(CLEAR_VARS)
 
@@ -264,7 +264,7 @@ LOCAL_C_INCLUDES += $(expat_C_INCLUDES)
 LOCAL_C_INCLUDES += $(libcutils_C_INCLUDES)
 LOCAL_C_INCLUDES += $(base_C_INCLUDES)
 LOCAL_C_INCLUDES += $(aapt_C_INCLUDES)
-LOCAL_C_INCLUDES += include/
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/include/
 
 LOCAL_CFLAGS += -DHAVE_MEMMOVE -DHAVE_ENDIAN_H -DHAVE_ANDROID_OS -DHAVE_PTHREADS -DHAVE_SYS_UIO_H -DHAVE_POSIX_FILEMAP -DHAVE_ENDIAN_H -DHAVE_ANDROID_OS -DHAVE_PTHREADS -DHAVE_SYS_UIO_H -DHAVE_POSIX_FILEMAP
 LOCAL_CPPFLAGS += -std=c++11 -DHAVE_MEMMOVE -DHAVE_ENDIAN_H -DHAVE_ANDROID_OS -DHAVE_PTHREADS -DHAVE_SYS_UIO_H -DHAVE_POSIX_FILEMAP -DHAVE_ENDIAN_H -DHAVE_ANDROID_OS -DHAVE_PTHREADS -DHAVE_SYS_UIO_H -DHAVE_POSIX_FILEMAP
