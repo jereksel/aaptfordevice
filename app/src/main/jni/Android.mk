@@ -163,6 +163,83 @@ libutils_SRC_FILES := \
 	$(LIBUTILS)/VectorImpl.cpp \
 	$(LIBUTILS)/misc.cpp 
 
+#############################################################################
+# aapt definitions
+#############################################################################
+
+aapt_SRC_FILES := \
+    aapt/AaptAssets.cpp \
+    aapt/AaptConfig.cpp \
+    aapt/AaptUtil.cpp \
+    aapt/AaptXml.cpp \
+    aapt/ApkBuilder.cpp \
+    aapt/Command.cpp \
+    aapt/CrunchCache.cpp \
+    aapt/FileFinder.cpp \
+    aapt/Images.cpp \
+    aapt/Package.cpp \
+    aapt/pseudolocalize.cpp \
+    aapt/Resource.cpp \
+    aapt/ResourceFilter.cpp \
+    aapt/ResourceIdCache.cpp \
+    aapt/ResourceTable.cpp \
+    aapt/SourcePos.cpp \
+    aapt/StringPool.cpp \
+    aapt/WorkQueue.cpp \
+    aapt/XMLNode.cpp \
+    aapt/ZipEntry.cpp \
+    aapt/ZipFile.cpp
+
+aapt_C_INCLUDES := aapt
+
+#############################################################################
+# androidfw definitions
+#############################################################################
+
+androidfw_SRC_FILES := \
+    androidfw/Asset.cpp \
+    androidfw/AssetDir.cpp \
+    androidfw/AssetManager.cpp \
+    androidfw/LocaleData.cpp \
+    androidfw/misc.cpp \
+    androidfw/ObbFile.cpp \
+    androidfw/ResourceTypes.cpp \
+    androidfw/StreamingZipInflater.cpp \
+    androidfw/TypeWrappers.cpp \
+    androidfw/ZipFileRO.cpp \
+    androidfw/ZipUtils.cpp
+
+#############################################################################
+# base definitions
+#############################################################################
+
+BASE = system_core/base
+base_SRC_FILES := \
+    $(BASE)/file.cpp \
+    $(BASE)/logging.cpp \
+    $(BASE)/parsenetaddress.cpp \
+    $(BASE)/stringprintf.cpp \
+    $(BASE)/strings.cpp \
+    $(BASE)/test_utils.cpp \
+	$(BASE)/errors_unix.cpp
+
+base_C_INCLUDES = $(BASE)/include
+
+#############################################################################
+# libziparchive definitions
+#############################################################################
+
+LIBZIPARCHIVE := system_core/libziparchive
+
+libziparchive_SRC_FILES := \
+    $(LIBZIPARCHIVE)/zip_archive.cc \
+    $(LIBZIPARCHIVE)/zip_archive_stream_entry.cc \
+    $(LIBZIPARCHIVE)/zip_writer.cc
+
+#############################################################################
+# safeiop definitions
+#############################################################################
+
 safeiop_SRC_FILES := safe-iop/src/safe_iop.c
 safeiop_C_INCLUDES := safe-iop/include
 
@@ -175,11 +252,17 @@ LOCAL_SRC_FILES += $(libpng_SRC_FILES)
 LOCAL_SRC_FILES += $(expat_SRC_FILES)
 LOCAL_SRC_FILES += $(libcutils_SRC_FILES)
 LOCAL_SRC_FILES += $(libutils_SRC_FILES)
+LOCAL_SRC_FILES += $(androidfw_SRC_FILES)
+LOCAL_SRC_FILES += $(base_SRC_FILES)
+LOCAL_SRC_FILES += $(libziparchive_SRC_FILES)
+LOCAL_SRC_FILES += $(aapt_SRC_FILES)
 
 LOCAL_C_INCLUDES += $(safeiop_C_INCLUDES)
 LOCAL_C_INCLUDES += $(libpng_C_INCLUDES)
 LOCAL_C_INCLUDES += $(expat_C_INCLUDES)
 LOCAL_C_INCLUDES += $(libcutils_C_INCLUDES)
+LOCAL_C_INCLUDES += $(base_C_INCLUDES)
+LOCAL_C_INCLUDES += $(aapt_C_INCLUDES)
 LOCAL_C_INCLUDES += include/
 
 LOCAL_CFLAGS += -DHAVE_MEMMOVE -DHAVE_ENDIAN_H -DHAVE_ANDROID_OS -DHAVE_PTHREADS -DHAVE_SYS_UIO_H -DHAVE_POSIX_FILEMAP -DHAVE_ENDIAN_H -DHAVE_ANDROID_OS -DHAVE_PTHREADS -DHAVE_SYS_UIO_H -DHAVE_POSIX_FILEMAP
