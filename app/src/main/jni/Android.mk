@@ -20,6 +20,14 @@ libpng_SRC_FILES := \
 	libpng/pngwtran.c \
 	libpng/pngwutil.c
 
+ifeq ($(TARGET_ARCH),arm)
+	libpng_SRC_FILES += \
+		libpng/arm/arm_init.c \
+		libpng/arm/filter_neon.S \
+		libpng/arm/filter_neon_intrinsics.c
+endif
+
+	
 libpng_C_INCLUDES := $(LOCAL_PATH)/libpng
 
 #############################################################################
@@ -109,8 +117,8 @@ libcutils_SRC_FILES := \
 # 	system_core/libcutils/jni/mq.c \
 # 	system_core/libcutils/jni/uevent.c
   
-# ifeq ($(TARGET_ARCH),arm)
-# libcutils_SRC_FILES += system_core/libcutils/jni/arch-arm/memset32.S
+ifeq ($(TARGET_ARCH),arm)
+libcutils_SRC_FILES += $(LIBCUTILS)/arch-arm/memset32.S
 # else  # !arm
 # ifeq ($(TARGET_ARCH),sh)
 # libcutils_SRC_FILES += system_core/libcutils/jni/memory.c system_core/libcutils/jni/atomic-android-sh.c
@@ -122,7 +130,7 @@ libcutils_SRC_FILES := \
 # libcutils_SRC_FILES += system_core/libcutils/jni/memory.c
 # endif # !x86-atom
 # endif # !sh
-# endif # !arm
+endif # !arm
 
 ifeq ($(TARGET_CPU_SMP),true)
     libcutils_targetSmpFlag := -DANDROID_SMP=1
