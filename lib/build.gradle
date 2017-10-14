@@ -5,13 +5,15 @@ import java.nio.file.Files
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING
 
-def ndkDirProperty
+def ndkDirProperty = null
 
 if (project.rootProject.file('local.properties').exists()) {
     Properties properties = new Properties()
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
     ndkDirProperty = properties.getProperty('ndk.dir')
-} else {
+}
+
+if (!ndkDirProperty) {
     ndkDirProperty = System.getenv("ANDROID_HOME") + "/ndk-bundle/"
 }
 
