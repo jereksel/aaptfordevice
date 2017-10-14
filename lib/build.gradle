@@ -1,0 +1,80 @@
+apply plugin: 'com.android.library'
+
+import org.apache.tools.ant.taskdefs.condition.Os
+import java.nio.file.Files
+
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING
+
+def ndkDirProperty
+
+if (project.rootProject.file('local.properties').exists()) {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    ndkDirProperty = properties.getProperty('ndk.dir')
+} else {
+    ndkDirProperty = System.getenv("ANDROID_HOME") + "/ndk-bundle/"
+}
+
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
+
+    defaultConfig {
+        minSdkVersion 22
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    sourceSets {
+        main {
+            jni.srcDirs = []
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    //From https://github.com/rmtheis/tess-two/blob/master/tess-two/build.gradle#L33
+    // Call external ndk-build(.cmd) script to build the native code
+    task ndkBuild(type: Exec) {
+        def ndkDirPrefix = ndkDirProperty != null ? ndkDirProperty + '/' : ''
+
+        def ndkBuildExt = Os.isFamily(Os.FAMILY_WINDOWS) ? ".cmd" : ""
+
+        commandLine "${ndkDirPrefix}ndk-build${ndkBuildExt}", '-C', file('src/main/jni').absolutePath,
+                '-j', Runtime.runtime.availableProcessors()
+
+    }
+
+    ndkBuild.doLast {
+        file("src/main/jniLibs/armeabi-v7a/libaaptcomplete.so").parentFile.mkdirs()
+        Files.move(
+                file("src/main/libs/armeabi-v7a/aaptcomplete").toPath(),
+                file("src/main/jniLibs/armeabi-v7a/libaaptcomplete.so").toPath(),
+                REPLACE_EXISTING
+        )
+//        file("src/main/jniLibs/armeabi-v7a/").mkdirs()
+//        file("src/main/libs/armeabi-v7a/aaptcomplete").renameTo("src/main/jniLibs/armeabi-v7a/libaaptcomplete.so")
+    }
+
+    tasks.withType(JavaCompile) {
+        compileTask -> compileTask.dependsOn ndkBuild
+    }
+
+}
+
+//android.useDeprecatedNdk = true
+
+dependencies {
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+}

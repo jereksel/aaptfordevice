@@ -1,19 +1,19 @@
-[submodule "app/src/main/jni/libpng"]
-	path = app/src/main/jni/libpng
+[submodule "lib/src/main/jni/libpng"]
+	path = lib/src/main/jni/libpng
 	url = https://github.com/android/platform_external_libpng.git
 	branch = nougat-mr2.3-release
 
-[submodule "app/src/main/jni/expat"]
-	path = app/src/main/jni/expat
+[submodule "lib/src/main/jni/expat"]
+	path = lib/src/main/jni/expat
 	url = https://github.com/android/platform_external_expat.git
 	branch = nougat-mr2.3-release
 
-[submodule "app/src/main/jni/system_core"]
-	path = app/src/main/jni/system_core
+[submodule "lib/src/main/jni/system_core"]
+	path = lib/src/main/jni/system_core
 	url = https://github.com/jereksel/platform_system_core.git
 	branch = nougat-mr2.3-release-aapt
 	
-[submodule "app/src/main/jni/safe-iop"]
-	path = app/src/main/jni/safe-iop
+[submodule "lib/src/main/jni/safe-iop"]
+	path = lib/src/main/jni/safe-iop
 	url = https://github.com/jereksel/platform_external_safe-iop.git
 	branch = nougat-mr2.3-release-aapt
