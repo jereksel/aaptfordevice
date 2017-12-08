@@ -20,12 +20,13 @@ libpng_SRC_FILES := \
 	libpng/pngwtran.c \
 	libpng/pngwutil.c
 
-ifeq ($(TARGET_ARCH),arm)
+# We use only arm anyway
+# ifeq ($(TARGET_ARCH),arm)
 	libpng_SRC_FILES += \
 		libpng/arm/arm_init.c \
 		libpng/arm/filter_neon.S \
 		libpng/arm/filter_neon_intrinsics.c
-endif
+# endif
 
 	
 libpng_C_INCLUDES := $(LOCAL_PATH)/libpng
@@ -275,6 +276,10 @@ LOCAL_C_INCLUDES += $(aapt_C_INCLUDES)
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/include/
 
 LOCAL_CFLAGS += -DHAVE_MEMMOVE -DHAVE_ENDIAN_H -DHAVE_ANDROID_OS -DHAVE_PTHREADS -DHAVE_SYS_UIO_H -DHAVE_POSIX_FILEMAP -DHAVE_ENDIAN_H -DHAVE_ANDROID_OS -DHAVE_PTHREADS -DHAVE_SYS_UIO_H -DHAVE_POSIX_FILEMAP
+
+# For now we only support arm devices
+LOCAL_CFLAGS += -DPNG_ARM_NEON_OPT=2
+
 LOCAL_CPPFLAGS += -std=c++11 -DHAVE_MEMMOVE -DHAVE_ENDIAN_H -DHAVE_ANDROID_OS -DHAVE_PTHREADS -DHAVE_SYS_UIO_H -DHAVE_POSIX_FILEMAP -DHAVE_ENDIAN_H -DHAVE_ANDROID_OS -DHAVE_PTHREADS -DHAVE_SYS_UIO_H -DHAVE_POSIX_FILEMAP
 
 LOCAL_LDLIBS += -lz -llog

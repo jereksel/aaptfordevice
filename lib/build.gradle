@@ -57,9 +57,15 @@ android {
 
     ndkBuild.doLast {
         file("src/main/jniLibs/armeabi-v7a/libaaptcomplete.so").parentFile.mkdirs()
-        Files.move(
+        file("src/main/jniLibs/arm64-v8a/libaaptcomplete.so").parentFile.mkdirs()
+        Files.copy(
                 file("src/main/libs/armeabi-v7a/aaptcomplete").toPath(),
                 file("src/main/jniLibs/armeabi-v7a/libaaptcomplete.so").toPath(),
+                REPLACE_EXISTING
+        )
+        Files.copy(
+                file("src/main/libs/arm64-v8a/aaptcomplete").toPath(),
+                file("src/main/jniLibs/arm64-v8a/libaaptcomplete.so").toPath(),
                 REPLACE_EXISTING
         )
 //        file("src/main/jniLibs/armeabi-v7a/").mkdirs()
