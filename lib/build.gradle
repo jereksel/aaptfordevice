@@ -14,7 +14,11 @@ if (project.rootProject.file('local.properties').exists()) {
 }
 
 if (!ndkDirProperty) {
-    ndkDirProperty = System.getenv("ANDROID_HOME") + "/ndk-bundle/"
+    if (System.getenv("ANDROID_NDK_HOME")) {
+        ndkDirProperty = System.getenv("ANDROID_NDK_HOME")
+    } else {
+        ndkDirProperty = System.getenv("ANDROID_HOME") + "/ndk-bundle/"
+    }
 }
 
 
