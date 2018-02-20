@@ -1,10 +1,9 @@
 *.iml
 .gradle
 /local.properties
-/.idea/workspace.xml
-/.idea/libraries
 .DS_Store
-/build
+build/
+target/
 /captures
 .externalNativeBuild
 .idea/
@@ -12,4 +11,3 @@
 jniLibs/
 libs/
 obj/
-.idea/
