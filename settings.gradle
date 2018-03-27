@@ -1,1 +1,4 @@
-include ':app', ':lib'
+include(':app')
+include(":lib")
+project(":lib").name = "aapt"
+

@@ -34,5 +34,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    compile project(":lib")
+    compile project(":aapt")
 }
+

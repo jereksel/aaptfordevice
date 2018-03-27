@@ -1,5 +1,8 @@
 apply plugin: 'com.android.library'
 
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+
 import org.apache.tools.ant.taskdefs.condition.Os
 import java.nio.file.Files
 
@@ -72,8 +75,7 @@ android {
                 file("src/main/jniLibs/arm64-v8a/libaaptcomplete.so").toPath(),
                 REPLACE_EXISTING
         )
-//        file("src/main/jniLibs/armeabi-v7a/").mkdirs()
-//        file("src/main/libs/armeabi-v7a/aaptcomplete").renameTo("src/main/jniLibs/armeabi-v7a/libaaptcomplete.so")
+
     }
 
     tasks.withType(JavaCompile) {
@@ -89,4 +91,64 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
+}
+
+def VERSION_NAME = "1.0"
+def GROUP = "com.jereksel"
+
+group = GROUP
+version = VERSION_NAME
+
+task sourceJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+publishing {
+    publications {
+
+        MyPublication(MavenPublication) {
+
+            pom.withXml { xml ->
+
+                def dependenciesNode = xml.asNode().appendNode('dependencies')
+
+                // Iterate over the implementation dependencies (we don't want the test ones), adding a <dependency> node for each
+                configurations.implementation.allDependencies.each {
+                    // Ensure dependencies such as fileTree are not included.
+                    if (it.name != 'unspecified') {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', it.version)
+                    }
+                }
+            }
+
+            groupId GROUP
+            artifactId project.name
+            artifact sourceJar
+        }
+    }
+}
+
+bintray {
+    override = true
+    publish = true
+    user = System.getenv("BINTRAY_USER")
+    key = System.getenv("BINTRAY_KEY")
+    pkg {
+        repo = 'maven'
+        name = 'aapt'
+        licenses = ['WTFPL']
+        publish = true
+        configurations = ['archives']
+        vcsUrl = 'https://github.com/jereksel/aaptfordevice'
+        version {
+            name = VERSION_NAME
+            released = new Date()
+            vcsTag = "v${VERSION_NAME}"
+        }
+    }
+    publications = ['MyPublication']
 }
