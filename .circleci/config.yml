@@ -62,11 +62,7 @@ jobs:
           command: ./gradlew androidDependencies --no-daemon
       - deploy:
           name: Bintray deploy
-          command: |
-              ./gradlew build
-              ./gradlew sourceJar
-              ./gradlew publish
-              ./gradlew bintrayUpload
+          command: ./gradlew build sourceJar publish generatePomFileForMyPublicationPublication bintrayUpload
 workflows:
   version: 2
   build:
