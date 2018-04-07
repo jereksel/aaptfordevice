@@ -75,7 +75,7 @@ workflows:
           filters:
             branches:
               only:
-                - deployment
+                - master
       - deploy:
           requires:
             - hold
